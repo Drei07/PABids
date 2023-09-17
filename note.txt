@@ -1,0 +1,1 @@
+I make the seller status to active because the admin side is not develop to make the confirmation on the seller.
