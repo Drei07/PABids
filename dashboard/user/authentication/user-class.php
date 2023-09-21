@@ -180,7 +180,7 @@ public function systemLogo(){
   unset($_SESSION['userSession']);
 
   $_SESSION['status_title'] = 'Logout!';
-  $_SESSION['status'] = 'Thank you for using E-CKET';
+  $_SESSION['status'] = 'Thank you for using PABids!';
   $_SESSION['status_code'] = 'success';
   $_SESSION['status_timer'] = 40000;    
   header('Location: ../../../signin');

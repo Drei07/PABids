@@ -1,5 +1,4 @@
 <?php
-include_once __DIR__. '/src/api/api.php';
 include_once 'dashboard/user/authentication/user-signin.php';
 include_once 'configuration/settings-configuration.php';
 

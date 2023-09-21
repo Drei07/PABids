@@ -166,7 +166,7 @@ foreach ($image_filenames as $filename) {
                         <p><strong>Product Description:</strong> PHP <?php echo $product_data['product_description'] ?></p>
                         <p><strong>Starting Bidding Amount:</strong> PHP <?php echo number_format($product_data['product_price'], 0, '.', ',') ?></p>
                         <p><strong>Bidding Start Date/Time: </strong> <?php echo  date('m/d/y h:i A', strtotime($product_data['bidding_start_date'])); ?></p>
-                        <p><strong>Bidding Start Date/Time: </strong> <?php echo  date('m/d/y h:i A', strtotime($product_data['bidding_end_date'])); ?></p>
+                        <p><strong>Bidding End Date/Time: </strong> <?php echo  date('m/d/y h:i A', strtotime($product_data['bidding_end_date'])); ?></p>
                         <div class="action">
                             <?php
                             $stmt = $user->runQuery("SELECT * FROM favorite WHERE user_id=:user_id AND product_id=:product_id");
