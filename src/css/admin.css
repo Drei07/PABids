@@ -1879,6 +1879,7 @@ border-right-color: var(--main);
 #content main .events-details li .details p{
 	padding: 10px 10px 10px 0px;
 	font-size: 13px;
+	text-align: left;
 
 }
 
@@ -1986,4 +1987,187 @@ border-right-color: var(--main);
 		font-size: 60px;
 	}
 
+}
+
+/* post */
+
+.post {
+	margin: 20px auto;
+	max-width: 400px;
+	padding: 10px;
+	border-bottom: 1px solid var(--dark-grey);
+}
+
+.post .post-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.post .profile-pic {
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+}
+
+.post .username {
+	font-weight: bold;
+	font-size: 12px;
+	margin-left: 7px;
+}
+
+.post .dot{
+	font-weight: bold;
+	font-size: 12px;
+	margin-left: 4px;
+	margin-right: 4px;
+	color: #727272;
+}
+
+.post .time{
+	font-weight: bold;
+	font-size: 12px;
+	color: #727272;
+}
+.post .post-img {
+	background-color: var(--dark);
+	height:450px;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.post .post-img img{
+	max-width: 375px;
+	max-height: 450px;
+	min-width: 300px;
+	min-height: 450px;
+}
+
+.post .post-actions {
+	margin-top: 10px;
+	text-align: left;
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.post .left-actions {
+    display: flex; /* Create a nested flex container for like-button and book-mark */
+}
+
+.post .view-post{
+	background-color: var(--dark-blue);
+	padding: 5px 10px;
+	border-radius: 5px;
+	border: none;
+	color: var(--light);
+	margin-right: 4px;
+	font-size: 13px;
+}
+
+.post .like-button {
+	color: var(--main);
+}
+.post .like-button .bx{
+	font-size: 30px;
+	cursor: pointer;
+}
+.post .like-button .bx:hover{
+	color: var(--dark-grey);
+}
+
+.post .book-mark {
+	color: var(--main);
+	margin-left: 7px;
+}
+.post .book-mark .bx{
+	font-size: 30px;
+	cursor: pointer;
+}
+.post .book-mark .bx:hover{
+	color: var(--dark-grey);
+}
+
+.post .price{
+    order: 3; /* This moves the "price" span to the right */
+	font-size: 15px;
+	font-weight: bold;
+
+}
+
+.post .like-count p{
+	text-align: left;
+	font-size: 15px;
+	padding-top: 10px;
+	font-weight: bold;
+}
+.post .post-description {
+	text-align: left;
+	margin-top: 10px;
+	font-size: 12px;
+	color: var(--dark-grey);
+
+}
+
+/* Style for the image slider container */
+.slideshow-item {
+    position: relative;
+    text-align: center;
+}
+
+/* Style for the image */
+.slideshow-item img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Style for the "Previous" and "Next" buttons */
+.prev-button,
+.next-button {
+    position: absolute;
+	font-size: 35px;
+	font-weight: 600;
+	color: var(--grey);
+	opacity: .8;
+	background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Style for the "Previous" button */
+.prev-button {
+    left: 10px;
+}
+
+/* Style for the "Next" button */
+.next-button {
+    right: 10px;
+}
+
+.image-flow {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+	position: absolute;
+    bottom: 20px; /* Position it at the bottom */
+    width: 100%; /* Make it stretch across the entire width */
+}
+
+.image-flow-indicator {
+    width: 8px;
+    height: 8px;
+    background-color: #bbbbbb75;
+    border-radius: 50%;
+    margin: 0 6px; /* Adjust the margin to control spacing between indicators */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Style the active indicator */
+.image-flow-indicator.active {
+    background-color: rgb(211, 211, 211); /* Change to your desired active color */
 }

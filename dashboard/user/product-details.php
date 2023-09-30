@@ -285,7 +285,7 @@ foreach ($image_filenames as $filename) {
                             <?php
                             } else {
                             ?>
-                                <h1 class="no-data">No Course Found</h1>
+                                <h1 class="no-data">No Bid Found</h1>
                             <?php
                             }
                             ?>

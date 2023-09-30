@@ -383,7 +383,7 @@ class Products
             $_SESSION['status_code'] = 'error';
             $_SESSION['status_timer'] = 100000;
         }
-        header('Location: ../more-info');
+        header('Location: ../');
     }
 
     public function selectBiddingWinner($product_id)
@@ -710,9 +710,19 @@ if (isset($_POST['btn-place-bid'])) {
     $place_bid->placeBidd($user_id, $product_id, $product_price, $product_bid_price, $highest_bid);
 }
 
-if (isset($_GET['favorite_product'])) {
-    $product_id = $_GET["id"];
-    $user_id  = $_SESSION['userSession'];
+// //favorite
+// if (isset($_GET['favorite_product'])) {
+//     $product_id = $_GET["id"];
+//     $user_id  = $_SESSION['userSession'];
+
+//     $favorite_product = new Products();
+//     $favorite_product->addtoFavorites($product_id, $user_id);
+// }
+
+//favorite
+if (isset($_POST["product_id"]) && isset($_POST["user_id"])) {
+    $product_id = $_POST["product_id"];
+    $user_id = $_POST["user_id"];
 
     $favorite_product = new Products();
     $favorite_product->addtoFavorites($product_id, $user_id);

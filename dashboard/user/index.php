@@ -126,15 +126,13 @@ include_once 'header.php';
 					<div class="head">
 						<h3><i class='bx bxs-cart'></i>Product List</h3>
 					</div>
-					<!-- BODY -->
 					<section class="data-table">
 						<div class="searchBx">
 							<input type="text" id="search-product-number" placeholder="Search Product No. . . . . . ." class="search">
 							<button class="searchBtn" type="button" onclick="searchProduct()"><i class="bx bx-search icon"></i></button>
 						</div>
-						<ul class="box-info" id="product">
-							<?php
-								$stmt = $user->runQuery("
+						<?php
+						$stmt = $user->runQuery("
 								SELECT p.*
 								FROM product p
 								WHERE p.user_id <> :user_id
@@ -148,32 +146,57 @@ include_once 'header.php';
 								)
 								ORDER BY p.id DESC
 							");
-							$stmt->execute(array(":user_id" => $user_id, ":status" => "active"));
+						$stmt->execute(array(":user_id" => $user_id, ":status" => "active"));
 
-							if ($stmt->rowCount() >= 1) {
-								while ($product_data = $stmt->fetch(PDO::FETCH_ASSOC)) {
-									extract($product_data);
-									$image_filenames = explode(',', $product_data['product_image']);
-									$first_image = reset($image_filenames); // Get the first image filename
-							?>
+						if ($stmt->rowCount() >= 1) {
+							while ($product_data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+								extract($product_data);
+								$image_filenames = explode(',', $product_data['product_image']);
+								$first_image = reset($image_filenames); // Get the first image filename
 
-									<li onclick="setSessionValues(<?php echo $product_data['id'] ?>)" class="slideshow-item" data-images="<?php echo implode(',', $image_filenames); ?>">
-										<img src="../../src/product_images/<?php echo $first_image; ?>" alt="">
-										<h4><?php echo $product_data['product_name'] ?></h4>
-										<p>#Product No. <?php echo $product_data['product_number'] ?></p>
-										<button type="button" onclick="setSessionValues(<?php echo $product_data['id'] ?>)" class="more btn-warning">More Info</button>
-									</li>
 
-								<?php
-								}
-							} else {
-							?>
-                                <h5 class="no-data">No product found</h5>
+								$stmt2 = $user->runQuery("SELECT * FROM users WHERE id=:id");
+								$stmt2->execute(array(":id" => $product_data['user_id']));
+								$user_data = $stmt2->fetch(PDO::FETCH_ASSOC);
+						?>
+								<div class="post">
+									<div class="post-header">
+										<img src="../../src/img/<?php echo $user_data['profile'] ?>" alt="User 1" class="profile-pic">
+										<span class="username"><?php echo $user_data['first_name'] ?></span>
+										<span class="dot">•</span>
+										<span class="time" data-timestamp="<?php echo $product_data['created_at']?>"><?php echo $product_data['created_at']?></span>
+									</div>
+									<div class="post-img slideshow-item" data-images="<?php echo implode(',', $image_filenames); ?>">
+										<img src="../../src/product_images/<?php echo $first_image; ?>" alt="Post 1">
+										<div class="image-flow">
+											<?php
+											$imageCount = count($image_filenames);
+											for ($i = 0; $i < $imageCount; $i++) {
+												echo '<span id="indicator-' . $i . '" class="image-flow-indicator" onclick="currentSlide(' . $i . ')"></span>';
+											}
+											?>
+										</div>
+										<button class="prev-button"><i class='bx bxs-chevron-left'></i></button>
+										<button class="next-button"><i class='bx bxs-chevron-right'></i></button>
+									</div>
+									<div class="post-actions">
+										<div class="left-actions">
+											<button class="view-post" onclick="setSessionValues(<?php echo $product_data['id'] ?>)">View Post</button>
+										</div>
+										<span class="price">PHP <?php echo number_format($product_data['product_price'], 0, '.', ',') ?></span>
+									</div>
+									<div class="like-count">
+										<p>Product No. #<?php  echo $product_data['product_number']?></p>
+									</div>
+								</div>
 							<?php
 							}
+						} else {
 							?>
-						</ul>
-
+							<h5 class="no-data">No product found</h5>
+						<?php
+						}
+						?>
 					</section>
 				</div>
 			</div>
@@ -188,6 +211,36 @@ include_once 'header.php';
 	?>
 
 	<script>
+
+    function updateRelativeTime() {
+        const timestampElements = document.querySelectorAll('.time[data-timestamp]');
+
+        timestampElements.forEach((element) => {
+            const timestamp = new Date(element.getAttribute('data-timestamp'));
+            const now = new Date();
+
+            const timeDifferenceInSeconds = Math.floor((now - timestamp) / 1000);
+
+            if (timeDifferenceInSeconds < 60) {
+                element.textContent = timeDifferenceInSeconds + ' seconds ago';
+            } else if (timeDifferenceInSeconds < 3600) {
+                const minutes = Math.floor(timeDifferenceInSeconds / 60);
+                element.textContent = minutes + ' minute' + (minutes > 1 ? 's' : '') + ' ago';
+            } else if (timeDifferenceInSeconds < 86400) {
+                const hours = Math.floor(timeDifferenceInSeconds / 3600);
+                element.textContent = hours + ' hour' + (hours > 1 ? 's' : '') + ' ago';
+            } else {
+                const days = Math.floor(timeDifferenceInSeconds / 86400);
+                element.textContent = days + ' day' + (days > 1 ? 's' : '') + ' ago';
+            }
+        });
+    }
+
+    // Call the function initially and set up an interval to update the relative time every minute
+    updateRelativeTime();
+    setInterval(updateRelativeTime, 60000); // Update every minute
+
+
 		function setSessionValues(eventId) {
 			fetch('more-info.php', {
 					method: 'POST',
@@ -232,35 +285,56 @@ include_once 'header.php';
 				noResultsMsg.style.display = 'none';
 			}
 		}
-
 		$(document).ready(function() {
 			$(".slideshow-item").each(function() {
 				var listItem = $(this);
 				var imageFilenames = listItem.data("images").split(",");
 				var currentIndex = 0;
-				var slideshowDelay = 1000; // 2 seconds
-				var intervalId; // To store the interval ID
-				var initialImageSrc = listItem.find("img").attr("src"); // Store the initial image src
+				var initialImageSrc = listItem.find("img").attr("src");
+
+				// Function to show the current image
+				function showCurrentImage() {
+					listItem.find("img").attr("src", "../../src/product_images/" + imageFilenames[currentIndex]);
+				}
+
+				// Show the first image initially
+				showCurrentImage();
 
 				// Function to show the next image
 				function showNextImage() {
-					listItem.find("img").attr("src", "../../src/product_images/" + imageFilenames[currentIndex]);
 					currentIndex = (currentIndex + 1) % imageFilenames.length;
+					showCurrentImage();
+					updateIndicators();
 				}
 
-				// Start slideshow on mouseenter
-				listItem.on("mouseenter", function() {
-					showNextImage(); // Show the first image immediately
-					intervalId = setInterval(showNextImage, slideshowDelay); // Start slideshow
+				// Function to show the previous image
+				function showPrevImage() {
+					currentIndex = (currentIndex - 1 + imageFilenames.length) % imageFilenames.length;
+					showCurrentImage();
+					updateIndicators();
+				}
+
+				// Function to update the indicators
+				function updateIndicators() {
+					$(".image-flow-indicator").removeClass("active");
+					$("#indicator-" + currentIndex).addClass("active");
+				}
+
+				// Event listener for next button click
+				listItem.find(".next-button").on("click", function() {
+					showNextImage();
 				});
 
-				// Stop slideshow and return to initial image on mouseleave
-				listItem.on("mouseleave", function() {
-					clearInterval(intervalId); // Stop the slideshow
-					listItem.find("img").attr("src", initialImageSrc); // Return to the initial image
+				// Event listener for previous button click
+				listItem.find(".prev-button").on("click", function() {
+					showPrevImage();
 				});
+
+				// Initialize indicators
+				updateIndicators();
 			});
 		});
+
 	</script>
 
 	<!-- SWEET ALERT -->

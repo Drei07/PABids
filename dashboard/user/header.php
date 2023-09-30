@@ -1,7 +1,7 @@
 <?php
 include_once '../../database/dbconfig2.php';
 require_once 'authentication/user-class.php';
-include_once '../../configuration/settings-configuration.php';
+include_once __DIR__ . '/../../configuration/settings-configuration.php';
 
 // instances of the classes
 $config = new SystemConfig();

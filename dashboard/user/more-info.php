@@ -179,23 +179,21 @@ foreach ($image_filenames as $filename) {
                             <?php } ?>
 
 
-
                             <?php
                             $stmt = $user->runQuery("SELECT * FROM bidding WHERE user_id=:user_id AND product_id=:product_id");
                             $stmt->execute(array(":user_id" => $_SESSION['userSession'], ":product_id" => $product_id));
 
-                            if ($product_data['bidding_status'] == "open"){
-
-                            
-                            if ($stmt->rowCount() >= 1) { 
-                                $bidding_data = $stmt->fetch(PDO::FETCH_ASSOC)?>
-                                <h2><strong>Your Bid:</strong> PHP <?php echo number_format($bidding_data['bid_price'], 0, '.', ',') ?></h2>
-                            <?php } else { ?>
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#classModal" class="btn btn-primary"><a><i class='bx bxs-dollar-circle'></i> Place your Bid</a></button>
-
-                            <?php } }else{?>
+                            if ($product_data['bidding_status'] == "open") {
+                                if ($stmt->rowCount() >= 1) {
+                                    $bidding_data = $stmt->fetch(PDO::FETCH_ASSOC);
+                            ?>
+                                    <h2><strong>Your Bid:</strong> PHP <?php echo number_format($bidding_data['bid_price'], 0, '.', ',') ?></h2>
+                                <?php } else { ?>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#classModal" class="btn btn-primary"><a><i class='bx bxs-dollar-circle'></i> Place your Bid</a></button>
+                                <?php }
+                            } else { ?>
                                 <h2 style="color: red;"><strong>Bidding Status : </strong> Closed</h2>
-                            <?php }?>
+                            <?php } ?>
 
                         </div>
                     </div>

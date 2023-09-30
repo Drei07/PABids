@@ -10,6 +10,6 @@ if(!$user->isUserLoggedIn())
 if($user->isUserLoggedIn()!="")
 {
  $user->logout();
- $user->redirect('../../../');
+ $user->redirect('../../../signin');
 }
 ?>
