@@ -341,7 +341,7 @@ include_once 'header.php';
 
 
 		function setSessionValues(eventId) {
-			fetch('product-details.php', {
+			fetch('product-sold-details.php', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded',
@@ -349,7 +349,7 @@ include_once 'header.php';
 					body: 'product_id=' + encodeURIComponent(eventId),
 				})
 				.then(response => {
-					window.location.href = 'product-details';
+					window.location.href = 'product-sold-details';
 				})
 				.catch(error => {
 					console.error('Error:', error);

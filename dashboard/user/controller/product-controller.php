@@ -27,66 +27,66 @@ class Products
         // Generate a unique product_number
         $product_number = $this->generateProductNumber();
         $product_price_in_php = number_format($product_price, 0, '.', ',');
-    
+
         // Get the seller's email
         $seller_data = $this->getUserData($user_id);
         $seller_email = $seller_data['email'];
-    
+
         // Get seller's details
         $seller_user_data = $this->getSellerData($user_id);
         $seller_name = $seller_data['first_name'] . ' ' . $seller_data['last_name'];
         $seller_address = $this->getFormattedSellerAddress($seller_user_data);
         $seller_contact_number = $seller_data['phone_number'];
         $product_url = "https://pabids.store/dashboard/user/";
-    
+
         // Get emails of all users except the seller
         $user_emails = $this->getAllUserEmailsExceptSeller($seller_email);
-    
-                // Handle product insertion and image filenames
-                $image_filenames = [];
-    
-                if (isset($product_images) && is_array($product_images['tmp_name'])) {
-                    foreach ($product_images['tmp_name'] as $key => $tmp_name) {
-                        $file_name = $product_images['name'][$key];
-                        $file_size = $product_images['size'][$key];
-                        $file_tmp = $product_images['tmp_name'][$key];
-            
-                        // Check if the file is an image (you can add more image file types as needed)
-                        $file_info = pathinfo($file_name);
-                        $valid_extensions = array("jpg", "jpeg", "png", "gif");
-            
-                        if (in_array(strtolower($file_info['extension']), $valid_extensions)) {
-                            $new_file_name = uniqid() . "." . strtolower($file_info['extension']);
-                            $target_dir = "../../../src/product_images/";
-                            $target_file = $target_dir . $new_file_name;
-            
-                            if (move_uploaded_file($file_tmp, $target_file)) {
-                                $image_filenames[] = $new_file_name;
-                            }
-                        }
+
+        // Handle product insertion and image filenames
+        $image_filenames = [];
+
+        if (isset($product_images) && is_array($product_images['tmp_name'])) {
+            foreach ($product_images['tmp_name'] as $key => $tmp_name) {
+                $file_name = $product_images['name'][$key];
+                $file_size = $product_images['size'][$key];
+                $file_tmp = $product_images['tmp_name'][$key];
+
+                // Check if the file is an image (you can add more image file types as needed)
+                $file_info = pathinfo($file_name);
+                $valid_extensions = array("jpg", "jpeg", "png", "gif");
+
+                if (in_array(strtolower($file_info['extension']), $valid_extensions)) {
+                    $new_file_name = uniqid() . "." . strtolower($file_info['extension']);
+                    $target_dir = "../../../src/product_images/";
+                    $target_file = $target_dir . $new_file_name;
+
+                    if (move_uploaded_file($file_tmp, $target_file)) {
+                        $image_filenames[] = $new_file_name;
                     }
                 }
-            
-                // Insert product data and image filenames into the database
-                $stmt = $this->user->runQuery('INSERT INTO product (user_id, product_name, product_price, product_description, bidding_start_date, bidding_end_date, product_image, product_number) VALUES (:user_id, :product_name, :product_price, :product_description, :bidding_start_date, :bidding_end_date, :product_image, :product_number)');
-            
-                $image_filenames_str = implode(",", $image_filenames); // Convert image filenames to a comma-separated string
-            
-                $stmt->bindParam(':user_id', $user_id);
-                $stmt->bindParam(':product_name', $product_name);
-                $stmt->bindParam(':product_price', $product_price);
-                $stmt->bindParam(':product_description', $product_description);
-                $stmt->bindParam(':bidding_start_date', $bidding_start_date);
-                $stmt->bindParam(':bidding_end_date', $bidding_end_date);
-                $stmt->bindParam(':product_image', $image_filenames_str);
-                $stmt->bindParam(':product_number', $product_number);
-            
-                try {
-                    if ($stmt->execute()) {
-                        foreach ($user_emails as $email) {
-                            // Create and send the email
-                            $message =
-                            "
+            }
+        }
+
+        // Insert product data and image filenames into the database
+        $stmt = $this->user->runQuery('INSERT INTO product (user_id, product_name, product_price, product_description, bidding_start_date, bidding_end_date, product_image, product_number) VALUES (:user_id, :product_name, :product_price, :product_description, :bidding_start_date, :bidding_end_date, :product_image, :product_number)');
+
+        $image_filenames_str = implode(",", $image_filenames); // Convert image filenames to a comma-separated string
+
+        $stmt->bindParam(':user_id', $user_id);
+        $stmt->bindParam(':product_name', $product_name);
+        $stmt->bindParam(':product_price', $product_price);
+        $stmt->bindParam(':product_description', $product_description);
+        $stmt->bindParam(':bidding_start_date', $bidding_start_date);
+        $stmt->bindParam(':bidding_end_date', $bidding_end_date);
+        $stmt->bindParam(':product_image', $image_filenames_str);
+        $stmt->bindParam(':product_number', $product_number);
+
+        try {
+            if ($stmt->execute()) {
+                foreach ($user_emails as $email) {
+                    // Create and send the email
+                    $message =
+                        "
                             <!DOCTYPE html>
                             <html>
                             <head>
@@ -165,32 +165,30 @@ class Products
                             </body>
                             </html>
                             ";
-                            $subject = "New Product Added: $product_name";
-                            $this->user->send_mail($email, $message, $subject, $this->smtp_email, $this->smtp_password, $this->system_name);
-                        }
-                        $_SESSION['status_title'] = 'Success!';
-                        $_SESSION['status'] = 'Product successfully added!';
-                        $_SESSION['status_code'] = 'success';
-                        $_SESSION['status_timer'] = 40000;
-                    } else {
-                        $_SESSION['status_title'] = 'Oops!';
-                        $_SESSION['status'] = 'Something went wrong, please try again!';
-                        $_SESSION['status_code'] = 'error';
-                        $_SESSION['status_timer'] = 100000;
-                    }
-                } catch (PDOException $e) {
-                    error_log('Database error: ' . $e->getMessage());
-                    $_SESSION['status_title'] = 'Database Error';
-                    $_SESSION['status'] = 'An error occurred while adding the product. Please try again later.';
-                    $_SESSION['status_code'] = 'error';
-                    $_SESSION['status_timer'] = 100000;
+                    $subject = "New Product Added: $product_name";
+                    $this->user->send_mail($email, $message, $subject, $this->smtp_email, $this->smtp_password, $this->system_name);
                 }
-                
-                header('Location: ../product');
+                $_SESSION['status_title'] = 'Success!';
+                $_SESSION['status'] = 'Product successfully added!';
+                $_SESSION['status_code'] = 'success';
+                $_SESSION['status_timer'] = 40000;
+            } else {
+                $_SESSION['status_title'] = 'Oops!';
+                $_SESSION['status'] = 'Something went wrong, please try again!';
+                $_SESSION['status_code'] = 'error';
+                $_SESSION['status_timer'] = 100000;
+            }
+        } catch (PDOException $e) {
+            error_log('Database error: ' . $e->getMessage());
+            $_SESSION['status_title'] = 'Database Error';
+            $_SESSION['status'] = 'An error occurred while adding the product. Please try again later.';
+            $_SESSION['status_code'] = 'error';
+            $_SESSION['status_timer'] = 100000;
+        }
 
-    
+        header('Location: ../product');
     }
-    
+
     public function editProduct($product_id, $product_name, $product_description, $product_price, $bidding_start_date, $bidding_end_date, $product_images)
     {
         // Handle product image filenames
@@ -494,16 +492,16 @@ class Products
         }
         header('Location: ../my-favorite');
     }
-    
+
     public function removeFromFavorites($product_id, $user_id)
     {
         $stmt = $this->user->runQuery('UPDATE favorite SET status=:status WHERE product_id=:product_id AND user_id = :user_id');
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':product_id', $product_id);
         $stmt->bindParam(':user_id', $user_id);
-    
+
         $status = "disabled"; // Set the status value
-    
+
         if ($stmt->execute()) {
             $_SESSION['status_title'] = 'Success!';
             $_SESSION['status'] = 'Successfully removed from your Favorites!';
@@ -524,9 +522,9 @@ class Products
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':bidding_id', $bidding_id);
         $stmt->bindParam(':user_id', $user_id);
-    
+
         $status = "disabled"; // Set the status value
-    
+
         if ($stmt->execute()) {
             $_SESSION['status_title'] = 'Success!';
             $_SESSION['status'] = 'Successfully cancel your bid!';
@@ -540,18 +538,18 @@ class Products
         }
         header('Location: ../bids');
     }
-    
+
     public function selectBiddingWinner($product_id)
     {
         // Query to get the highest bid price for the product
         $stmt = $this->user->runQuery("SELECT MAX(bid_price) as max_bid_price FROM bidding WHERE product_id=:product_id AND status=:status");
-// Define the parameters as variables
-$product_id = $product_id;
-$status = "active"; // Assuming status is a string
+        // Define the parameters as variables
+        $product_id = $product_id;
+        $status = "active"; // Assuming status is a string
 
-// Use these variables in the bindParam method
-$stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT); // Assuming product_id is an integer
-$stmt->bindParam(':status', $status, PDO::PARAM_STR);
+        // Use these variables in the bindParam method
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT); // Assuming product_id is an integer
+        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
         $stmt->execute();
         $max_bid_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
