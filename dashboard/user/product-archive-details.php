@@ -139,18 +139,18 @@ foreach ($image_filenames as $filename) {
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Product Details</h1>
+                    <h1>Product Archive Details</h1>
                     <ul class="breadcrumb">
                         <li>
                             <a class="active" href="./">Home</a>
                         </li>
                         <li>|</li>
                         <li>
-                            <a class="active" href="product">Product</a>
+                            <a class="active" href="product-archive">Product Archive</a>
                         </li>
                         <li>|</li>
                         <li>
-                            <a href="">Product Details</a>
+                            <a href="">Product Archive Details</a>
                         </li>
                     </ul>
                 </div>
