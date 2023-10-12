@@ -37,157 +37,158 @@ class Products
         $seller_name = $seller_data['first_name'] . ' ' . $seller_data['last_name'];
         $seller_address = $this->getFormattedSellerAddress($seller_user_data);
         $seller_contact_number = $seller_data['phone_number'];
-        $product_url = "http://localhost/PABids/dashboard/user/";
+        $product_url = "https://pabids.store/dashboard/user/";
     
         // Get emails of all users except the seller
         $user_emails = $this->getAllUserEmailsExceptSeller($seller_email);
     
-        foreach ($user_emails as $email) {
-            // Create and send the email
-            $message =
-            "
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset='UTF-8'>
-                <title>New Product</title>
-                <style>
-                    /* Define your CSS styles here */
-                    body {
-                        font-family: Arial, sans-serif;
-                        background-color: #f5f5f5;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    
-                    .container {
-                        max-width: 600px;
-                        margin: 0 auto;
-                        padding: 30px;
-                        background-color: #ffffff;
-                        border-radius: 4px;
-                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                    }
-                    
-                    h1 {
-                        color: #333333;
-                        font-size: 24px;
-                        margin-bottom: 20px;
-                    }
-                    
-                    p {
-                        color: #666666;
-                        font-size: 16px;
-                        margin-bottom: 10px;
-                    }
-                    
-                    .button {
-                        display: inline-block;
-                        padding: 12px 24px;
-                        background-color: #0088cc;
-                        color: #ffffff;
-                        text-decoration: none;
-                        border-radius: 4px;
-                        font-size: 16px;
-                        margin-top: 20px;
-                    }
-                    
-                    .logo {
-                        display: block;
-                        text-align: center;
-                        margin-bottom: 30px;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class='container'>
-                    <div class='logo'>
-                    <img src='cid:logo' alt='Logo' width='150'>
-                    </div>
-                    <h1>New Product Added</h1>
-                    <p>We are excited to inform you that a new product has been added to our platform:</p><br>
-                    <p>Product Name: $product_name</p>
-                    <p>Product Number: #$product_number</p>
-                    <p>Product Description: $product_description</p>
-                    <p>Product Price: PHP $product_price_in_php</p><br>
+                // Handle product insertion and image filenames
+                $image_filenames = [];
     
-                    <p>Seller Name: $seller_name</p>
-                    <p>Seller Address: $seller_address</p><br>
-                    <p>Seller Contact Number: +63$seller_contact_number</p>
-    
-                    <p>This is a great opportunity to explore our latest offerings. Click the button below to view the product:</p>
-                    <a href='$product_url' class='button'>View Product</a><br>
+                if (isset($product_images) && is_array($product_images['tmp_name'])) {
+                    foreach ($product_images['tmp_name'] as $key => $tmp_name) {
+                        $file_name = $product_images['name'][$key];
+                        $file_size = $product_images['size'][$key];
+                        $file_tmp = $product_images['tmp_name'][$key];
             
-                    <p>Thank you for being a valued member of our platform. We look forward to serving you with more exciting products in the future.</p><br>
-    
-                </div>
-            </body>
-            </html>
-            ";
-            $subject = "New Product Added: $product_name";
-            $this->user->send_mail($email, $message, $subject, $this->smtp_email, $this->smtp_password, $this->system_name);
-        }
-    
-        // Handle product insertion and image filenames
-        $image_filenames = [];
-    
-        if (isset($product_images) && is_array($product_images['tmp_name'])) {
-            foreach ($product_images['tmp_name'] as $key => $tmp_name) {
-                $file_name = $product_images['name'][$key];
-                $file_size = $product_images['size'][$key];
-                $file_tmp = $product_images['tmp_name'][$key];
-    
-                // Check if the file is an image (you can add more image file types as needed)
-                $file_info = pathinfo($file_name);
-                $valid_extensions = array("jpg", "jpeg", "png", "gif");
-    
-                if (in_array(strtolower($file_info['extension']), $valid_extensions)) {
-                    $new_file_name = uniqid() . "." . strtolower($file_info['extension']);
-                    $target_dir = "../../../src/product_images/";
-                    $target_file = $target_dir . $new_file_name;
-    
-                    if (move_uploaded_file($file_tmp, $target_file)) {
-                        $image_filenames[] = $new_file_name;
+                        // Check if the file is an image (you can add more image file types as needed)
+                        $file_info = pathinfo($file_name);
+                        $valid_extensions = array("jpg", "jpeg", "png", "gif");
+            
+                        if (in_array(strtolower($file_info['extension']), $valid_extensions)) {
+                            $new_file_name = uniqid() . "." . strtolower($file_info['extension']);
+                            $target_dir = "../../../src/product_images/";
+                            $target_file = $target_dir . $new_file_name;
+            
+                            if (move_uploaded_file($file_tmp, $target_file)) {
+                                $image_filenames[] = $new_file_name;
+                            }
+                        }
                     }
                 }
-            }
-        }
+            
+                // Insert product data and image filenames into the database
+                $stmt = $this->user->runQuery('INSERT INTO product (user_id, product_name, product_price, product_description, bidding_start_date, bidding_end_date, product_image, product_number) VALUES (:user_id, :product_name, :product_price, :product_description, :bidding_start_date, :bidding_end_date, :product_image, :product_number)');
+            
+                $image_filenames_str = implode(",", $image_filenames); // Convert image filenames to a comma-separated string
+            
+                $stmt->bindParam(':user_id', $user_id);
+                $stmt->bindParam(':product_name', $product_name);
+                $stmt->bindParam(':product_price', $product_price);
+                $stmt->bindParam(':product_description', $product_description);
+                $stmt->bindParam(':bidding_start_date', $bidding_start_date);
+                $stmt->bindParam(':bidding_end_date', $bidding_end_date);
+                $stmt->bindParam(':product_image', $image_filenames_str);
+                $stmt->bindParam(':product_number', $product_number);
+            
+                try {
+                    if ($stmt->execute()) {
+                        foreach ($user_emails as $email) {
+                            // Create and send the email
+                            $message =
+                            "
+                            <!DOCTYPE html>
+                            <html>
+                            <head>
+                                <meta charset='UTF-8'>
+                                <title>New Product</title>
+                                <style>
+                                    /* Define your CSS styles here */
+                                    body {
+                                        font-family: Arial, sans-serif;
+                                        background-color: #f5f5f5;
+                                        margin: 0;
+                                        padding: 0;
+                                    }
+                                    
+                                    .container {
+                                        max-width: 600px;
+                                        margin: 0 auto;
+                                        padding: 30px;
+                                        background-color: #ffffff;
+                                        border-radius: 4px;
+                                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                                    }
+                                    
+                                    h1 {
+                                        color: #333333;
+                                        font-size: 24px;
+                                        margin-bottom: 20px;
+                                    }
+                                    
+                                    p {
+                                        color: #666666;
+                                        font-size: 16px;
+                                        margin-bottom: 10px;
+                                    }
+                                    
+                                    .button {
+                                        display: inline-block;
+                                        padding: 12px 24px;
+                                        background-color: #0088cc;
+                                        color: #ffffff;
+                                        text-decoration: none;
+                                        border-radius: 4px;
+                                        font-size: 16px;
+                                        margin-top: 20px;
+                                    }
+                                    
+                                    .logo {
+                                        display: block;
+                                        text-align: center;
+                                        margin-bottom: 30px;
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <div class='container'>
+                                    <div class='logo'>
+                                    <img src='cid:logo' alt='Logo' width='150'>
+                                    </div>
+                                    <h1>New Product Added</h1>
+                                    <p>We are excited to inform you that a new product has been added to our platform:</p><br>
+                                    <p>Product Name: $product_name</p>
+                                    <p>Product Number: #$product_number</p>
+                                    <p>Product Description: $product_description</p>
+                                    <p>Product Price: PHP $product_price_in_php</p><br>
+                    
+                                    <p>Seller Name: $seller_name</p>
+                                    <p>Seller Address: $seller_address</p><br>
+                                    <p>Seller Contact Number: +63$seller_contact_number</p>
+                    
+                                    <p>This is a great opportunity to explore our latest offerings. Click the button below to view the product:</p>
+                                    <a href='$product_url' class='button'>View Product</a><br>
+                            
+                                    <p>Thank you for being a valued member of our platform. We look forward to serving you with more exciting products in the future.</p><br>
+                    
+                                </div>
+                            </body>
+                            </html>
+                            ";
+                            $subject = "New Product Added: $product_name";
+                            $this->user->send_mail($email, $message, $subject, $this->smtp_email, $this->smtp_password, $this->system_name);
+                        }
+                        $_SESSION['status_title'] = 'Success!';
+                        $_SESSION['status'] = 'Product successfully added!';
+                        $_SESSION['status_code'] = 'success';
+                        $_SESSION['status_timer'] = 40000;
+                    } else {
+                        $_SESSION['status_title'] = 'Oops!';
+                        $_SESSION['status'] = 'Something went wrong, please try again!';
+                        $_SESSION['status_code'] = 'error';
+                        $_SESSION['status_timer'] = 100000;
+                    }
+                } catch (PDOException $e) {
+                    error_log('Database error: ' . $e->getMessage());
+                    $_SESSION['status_title'] = 'Database Error';
+                    $_SESSION['status'] = 'An error occurred while adding the product. Please try again later.';
+                    $_SESSION['status_code'] = 'error';
+                    $_SESSION['status_timer'] = 100000;
+                }
+                
+                header('Location: ../product');
+
     
-        // Insert product data and image filenames into the database
-        $stmt = $this->user->runQuery('INSERT INTO product (user_id, product_name, product_price, product_description, bidding_start_date, bidding_end_date, product_image, product_number) VALUES (:user_id, :product_name, :product_price, :product_description, :bidding_start_date, :bidding_end_date, :product_image, :product_number)');
-    
-        $image_filenames_str = implode(",", $image_filenames); // Convert image filenames to a comma-separated string
-    
-        $stmt->bindParam(':user_id', $user_id);
-        $stmt->bindParam(':product_name', $product_name);
-        $stmt->bindParam(':product_price', $product_price);
-        $stmt->bindParam(':product_description', $product_description);
-        $stmt->bindParam(':bidding_start_date', $bidding_start_date);
-        $stmt->bindParam(':bidding_end_date', $bidding_end_date);
-        $stmt->bindParam(':product_image', $image_filenames_str);
-        $stmt->bindParam(':product_number', $product_number);
-    
-        try {
-            if ($stmt->execute()) {
-                $_SESSION['status_title'] = 'Success!';
-                $_SESSION['status'] = 'Product successfully added!';
-                $_SESSION['status_code'] = 'success';
-                $_SESSION['status_timer'] = 40000;
-            } else {
-                $_SESSION['status_title'] = 'Oops!';
-                $_SESSION['status'] = 'Something went wrong, please try again!';
-                $_SESSION['status_code'] = 'error';
-                $_SESSION['status_timer'] = 100000;
-            }
-        } catch (PDOException $e) {
-            error_log('Database error: ' . $e->getMessage());
-            $_SESSION['status_title'] = 'Database Error';
-            $_SESSION['status'] = 'An error occurred while adding the product. Please try again later.';
-            $_SESSION['status_code'] = 'error';
-            $_SESSION['status_timer'] = 100000;
-        }
-        
-        header('Location: ../product');
     }
     
     public function editProduct($product_id, $product_name, $product_description, $product_price, $bidding_start_date, $bidding_end_date, $product_images)
