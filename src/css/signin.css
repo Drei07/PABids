@@ -4,10 +4,10 @@ html,body {
 	height: 100%;
 }
 
-/* RECAPTCHA */
+/* RECAPTCHA
 .grecaptcha-badge { 
     visibility: hidden;
-}
+} */
 
 .swal-text{
 	text-align: center;

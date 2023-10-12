@@ -31,7 +31,7 @@ class Registration {
             $_SESSION['status'] = "Email already taken. Please try another one.";
             $_SESSION['status_code'] = "error";
             $_SESSION['status_timer'] = 100000;
-            header('Location: ../user');
+            header('Location: ../../../');
             exit();
         } else {
             if ($this->user->register($first_name, $middle_name, $last_name, $phone_number, $email, $hash_password, $tokencode, $user_type)) {

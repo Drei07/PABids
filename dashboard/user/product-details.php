@@ -102,12 +102,6 @@ foreach ($image_filenames as $filename) {
                     <span class="text">My Favorite</span>
                 </a>
             </li>
-            <li>
-                <a href="my-rating">
-                    <i class='bx bxs-bar-chart-alt-2'></i>
-                    <span class="text">My Rating</span>
-                </a>
-            </li>
         </ul>
         <ul class="side-menu top">
             <li>
@@ -272,7 +266,6 @@ foreach ($image_filenames as $filename) {
                                                     <label for=""><?php echo $user_data['first_name'], ' ', $user_data['last_name'] ?></label>
                                                 </h2>
                                             </div>
-                                            <a href="controller/course-event-controller.php?id=&delete_course_event" class="view-details"><i class='bx bxs-user-rectangle icon-2' ></i></a>
                                         </div>
                                     </div>
                                 <?php

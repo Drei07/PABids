@@ -65,12 +65,7 @@ include_once 'header.php';
                     <span class="text">My Favorite</span>
                 </a>
             </li>
-            <li>
-                <a href="my-rating">
-                    <i class='bx bxs-bar-chart-alt-2'></i>
-                    <span class="text">My Rating</span>
-                </a>
-            </li>
+
 		</ul>
 		<ul class="side-menu top">
 			<li>

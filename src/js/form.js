@@ -380,6 +380,26 @@ $('.favorite').on('click', function (e) {
 		});
 });
 
+//remove_favorite Profile
+$('.remove_favorite').on('click', function (e) {
+	e.preventDefault();
+	const href = $(this).attr('href')
+
+	swal({
+		title: "Remove to your Favorite?",
+		text: "Do you want to remove this product in your favorite list?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+		.then((willDelete) => {
+			if (willDelete) {
+				document.location.href = href;
+			}
+		});
+});
+
+
 
 
 //Back Profile
@@ -390,6 +410,64 @@ $('.back').on('click', function (e) {
 	swal({
 		title: "Back?",
 		text: "Do you want to back?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+		.then((willDelete) => {
+			if (willDelete) {
+				document.location.href = href;
+			}
+		});
+});
+
+//cancel bidd
+$('.cancel').on('click', function (e) {
+	e.preventDefault();
+	const href = $(this).attr('href')
+
+	swal({
+		title: "Cancel?",
+		text: "Are you sure you want to cancel your bid? Cancelling your bid will remove it from this product.",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+		.then((willDelete) => {
+			if (willDelete) {
+				document.location.href = href;
+			}
+		});
+});
+
+//Decline bidd
+$('.decline').on('click', function (e) {
+	e.preventDefault();
+	const href = $(this).attr('href')
+
+	swal({
+		title: "Decline?",
+		text: "Do you want to decline this seller registration",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+		.then((willDelete) => {
+			if (willDelete) {
+				document.location.href = href;
+			}
+		});
+});
+
+
+//accept bidd
+$('.accept').on('click', function (e) {
+	e.preventDefault();
+	const href = $(this).attr('href')
+
+	swal({
+		title: "Accept?",
+		text: "Do you want to accept this seller registration",
 		icon: "warning",
 		buttons: true,
 		dangerMode: true,
@@ -571,69 +649,70 @@ function ImgUpload() {
 	
 }
 
-function editImgUpload(existingImagesHTML) {
-    var imgArray = [];
 
-    $(".upload__inputfile").each(function () {
-        var imgWrap = $(this).closest(".upload__box").find(".upload__img-wrap");
-        var maxLength = $(this).attr("data-max_length");
+// function editImgUpload(existingImagesHTML) {
+//     var imgArray = [];
 
-        // Append existing images HTML
-        imgWrap.append(existingImagesHTML);
+//     $(".upload__inputfile").each(function () {
+//         var imgWrap = $(this).closest(".upload__box").find(".upload__img-wrap");
+//         var maxLength = $(this).attr("data-max_length");
 
-        $(this).on("change", function (e) {
+//         // Append existing images HTML
+//         imgWrap.append(existingImagesHTML);
 
-            var files = e.target.files;
-            var filesArr = Array.prototype.slice.call(files);
-            var iterator = 0;
+//         $(this).on("change", function (e) {
 
-            filesArr.forEach(function (f, index) {
-                if (!f.type.match("image.*")) {
-                    return;
-                }
+//             var files = e.target.files;
+//             var filesArr = Array.prototype.slice.call(files);
+//             var iterator = 0;
 
-                if (imgArray.length > maxLength) {
-                    return false;
-                } else {
-                    var len = 0;
-                    for (var i = 0; i < imgArray.length; i++) {
-                        if (imgArray[i] !== undefined) {
-                            len++;
-                        }
-                    }
-                    if (len > maxLength) {
-                        return false;
-                    } else {
-                        imgArray.push(f);
+//             filesArr.forEach(function (f, index) {
+//                 if (!f.type.match("image.*")) {
+//                     return;
+//                 }
 
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-							var html =
-							"<div class='upload__img-box'><div style='background-image: url(" +
-							e.target.result +
-							")' data-number='" +
-							$(".upload__img-close").length +
-							"' data-file='" +
-							f.name +
-							"' class='img-bg'><div class='upload__img-close'></div></div></div>";
-                            iterator++;
-                        };
-                        reader.readAsDataURL(f);
-                    }
-                }
-            });
-        });
-    });
+//                 if (imgArray.length > maxLength) {
+//                     return false;
+//                 } else {
+//                     var len = 0;
+//                     for (var i = 0; i < imgArray.length; i++) {
+//                         if (imgArray[i] !== undefined) {
+//                             len++;
+//                         }
+//                     }
+//                     if (len > maxLength) {
+//                         return false;
+//                     } else {
+//                         imgArray.push(f);
 
-    $("body").on("click", ".upload__img-close", function (e) {
-        var file = $(this).parent().data("file");
-        for (var i = 0; i < imgArray.length; i++) {
-            if (imgArray[i].name === file) {
-                imgArray.splice(i, 1);
-                break;
-            }
-        }
-        $(this).parent().parent().remove();
-    });
-}
+//                         var reader = new FileReader();
+//                         reader.onload = function (e) {
+// 							var html =
+// 							"<div class='upload__img-box'><div style='background-image: url(" +
+// 							e.target.result +
+// 							")' data-number='" +
+// 							$(".upload__img-close").length +
+// 							"' data-file='" +
+// 							f.name +
+// 							"' class='img-bg'><div class='upload__img-close'></div></div></div>";
+//                             iterator++;
+//                         };
+//                         reader.readAsDataURL(f);
+//                     }
+//                 }
+//             });
+//         });
+//     });
+
+//     $("body").on("click", ".upload__img-close", function (e) {
+//         var file = $(this).parent().data("file");
+//         for (var i = 0; i < imgArray.length; i++) {
+//             if (imgArray[i].name === file) {
+//                 imgArray.splice(i, 1);
+//                 break;
+//             }
+//         }
+//         $(this).parent().parent().remove();
+//     });
+// }
 

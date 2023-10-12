@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 17, 2023 at 02:42 PM
+-- Generation Time: Oct 12, 2023 at 04:08 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -50,7 +50,7 @@ CREATE TABLE `bidding` (
   `user_id` int(14) DEFAULT NULL,
   `product_id` int(14) DEFAULT NULL,
   `bid_price` int(14) DEFAULT NULL,
-  `bid_status` enum('winner','loss','pending') NOT NULL DEFAULT 'pending',
+  `bid_status` enum('winner','lost','pending') NOT NULL DEFAULT 'pending',
   `status` enum('active','disabled') NOT NULL DEFAULT 'active',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
@@ -75,7 +75,7 @@ CREATE TABLE `email_config` (
 --
 
 INSERT INTO `email_config` (`Id`, `email`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'ecket2023@gmail.com', 'vnvbophnoxickore\n', '2023-02-20 11:25:24', '2023-07-12 10:41:39');
+(1, 'pabids2023@gmail.com', 'nixudxwdfvnsonze', '2023-02-20 11:25:24', '2023-10-08 08:44:44');
 
 -- --------------------------------------------------------
 
@@ -91,14 +91,6 @@ CREATE TABLE `favorite` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `favorite`
---
-
-INSERT INTO `favorite` (`id`, `user_id`, `product_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 13, 2, 'active', '2023-09-15 08:15:08', NULL),
-(3, 13, 1, 'active', '2023-09-15 09:01:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -119,7 +111,22 @@ CREATE TABLE `google_recaptcha_api` (
 --
 
 INSERT INTO `google_recaptcha_api` (`Id`, `site_key`, `site_secret_key`, `created_at`, `updated_at`) VALUES
-(1, '6Lf-JsEeAAAAAPwHHG56Bb4kwfboD_eDUmDxtG0k', '6Lf-JsEeAAAAANEiSp7kRn6nmakC9A6vSGdaXxcO', '2023-02-20 00:57:18', '2023-07-01 02:38:18');
+(1, '6LdiQZQhAAAAABpaNFtJpgzGpmQv2FwhaqNj2azh', '6LdiQZQhAAAAAByS6pnNjOs9xdYXMrrW2OeTFlrm', '2023-02-20 00:57:18', '2023-10-07 01:20:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `likes`
+--
+
+CREATE TABLE `likes` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `status` enum('active','disabled') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -134,13 +141,6 @@ CREATE TABLE `logs` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `logs`
---
-
-INSERT INTO `logs` (`id`, `user_id`, `activity`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Has successfully signed in', '2023-09-17 12:38:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -225,7 +225,7 @@ CREATE TABLE `seller` (
   `postal_code` varchar(145) DEFAULT NULL,
   `valid_id_front` varchar(145) DEFAULT NULL,
   `valid_id_back` varchar(145) DEFAULT NULL,
-  `status` enum('not_verify','verify','disabled') NOT NULL DEFAULT 'verify',
+  `status` enum('not_verify','verify','disabled') NOT NULL DEFAULT 'not_verify',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -254,7 +254,7 @@ CREATE TABLE `system_config` (
 --
 
 INSERT INTO `system_config` (`Id`, `system_name`, `system_phone_number`, `system_email`, `system_logo`, `system_favicon`, `system_color`, `system_copy_right`, `created_at`, `updated_at`) VALUES
-(1, 'PABids', '0977662192', 'dct.ecket2023@gmail.com', 'pabids-logo.png', 'pabids-favicon.png', NULL, 'COPYRIGHT © 2023 - PABids. ALL RIGHTS RESERVED.', '2023-02-20 00:16:44', '2023-09-02 01:33:10');
+(1, 'PABids', '0977662192', 'pabids2023@gmail.com', 'pabids-logo.png', 'pabids-favicon.png', NULL, 'COPYRIGHT © 2023 - PABids. ALL RIGHTS RESERVED.', '2023-02-20 00:16:44', '2023-10-08 08:41:03');
 
 -- --------------------------------------------------------
 
@@ -283,6 +283,18 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `sex`, `date_of_birth`, `age`, `civil_status`, `phone_number`, `email`, `password`, `profile`, `status`, `tokencode`, `account_status`, `user_type`, `seller`, `created_at`, `updated_at`) VALUES
+(1, 'ADMIN', 'ADMIN', 'ADMIN', 'MALE', NULL, NULL, 'MARRIED', '9893278279', 'pabids2023@gmail.com', '42f749ade7f9e195bf475f37a44cafcb', 'profile.png', 'Y', '4b1df3ad169dc30bfa742526659acd4e', 'active', '1', 'No', '2023-09-17 23:33:38', '2023-10-08 10:52:55'),
+(5, 'JUAN', 'CRUZ', 'SANTOS', NULL, NULL, NULL, NULL, '9776621929', 'sample@gmail.com', '42f749ade7f9e195bf475f37a44cafcb', 'profile.png', 'Y', 'd05c1dc72075bc797399d2686003f0dc', 'active', '2', 'No', '2023-10-08 10:45:51', '2023-10-12 14:08:34'),
+(6, 'JUAN', 'CRUZ', 'SANTOS', NULL, NULL, NULL, NULL, '9776621929', 'sample1@gmail.com', '42f749ade7f9e195bf475f37a44cafcb', 'profile.png', 'Y', 'd05c1dc72075bc797399d2686003f0dc', 'active', '2', 'No', '2023-10-08 10:45:51', '2023-10-09 10:02:02'),
+(7, 'JUAN', 'CRUZ', 'SANTOS', NULL, NULL, NULL, NULL, '9776621929', 'sample2@gmail.com', '42f749ade7f9e195bf475f37a44cafcb', 'profile.png', 'Y', 'd05c1dc72075bc797399d2686003f0dc', 'active', '2', 'No', '2023-10-08 10:45:51', '2023-10-09 10:02:11'),
+(8, 'JUAN', 'CRUZ', 'SANTOS', NULL, NULL, NULL, NULL, '9776621929', 'sample3@gmail.com', '42f749ade7f9e195bf475f37a44cafcb', 'profile.png', 'Y', 'd05c1dc72075bc797399d2686003f0dc', 'active', '2', 'No', '2023-10-08 10:45:51', '2023-10-09 10:02:24'),
+(9, 'JUAN', 'CRUZ', 'SANTOS', NULL, NULL, NULL, NULL, '9776621929', 'sample4@gmail.com', '42f749ade7f9e195bf475f37a44cafcb', 'profile.png', 'Y', 'd05c1dc72075bc797399d2686003f0dc', 'active', '2', 'No', '2023-10-08 10:45:51', '2023-10-09 10:02:35');
 
 --
 -- Indexes for dumped tables
@@ -321,6 +333,14 @@ ALTER TABLE `favorite`
 --
 ALTER TABLE `google_recaptcha_api`
   ADD PRIMARY KEY (`Id`);
+
+--
+-- Indexes for table `likes`
+--
+ALTER TABLE `likes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `logs`
@@ -387,7 +407,7 @@ ALTER TABLE `email_config`
 -- AUTO_INCREMENT for table `favorite`
 --
 ALTER TABLE `favorite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `google_recaptcha_api`
@@ -396,10 +416,16 @@ ALTER TABLE `google_recaptcha_api`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `likes`
+--
+ALTER TABLE `likes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -429,7 +455,7 @@ ALTER TABLE `system_config`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
@@ -448,6 +474,13 @@ ALTER TABLE `bidding`
 ALTER TABLE `favorite`
   ADD CONSTRAINT `favorite_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `favorite_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+
+--
+-- Constraints for table `likes`
+--
+ALTER TABLE `likes`
+  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 
 --
 -- Constraints for table `logs`

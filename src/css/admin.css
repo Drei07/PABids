@@ -1532,9 +1532,9 @@ border-right-color: var(--main);
 }
 
 #content main .table-data .order .data-table .table .page-item.active .page-link{
-    background-color: var(--button);
+    background-color: var(--dark-blue);
     color: var(--light);
-    border-color: var(--button);
+    border-color: var(--dark-blue);
 
 }
 /* END OF TABLES */

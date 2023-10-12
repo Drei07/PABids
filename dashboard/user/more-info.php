@@ -102,12 +102,7 @@ foreach ($image_filenames as $filename) {
                     <span class="text">My Favorite</span>
                 </a>
             </li>
-            <li>
-                <a href="my-rating">
-                    <i class='bx bxs-bar-chart-alt-2'></i>
-                    <span class="text">My Rating</span>
-                </a>
-            </li>
+
         </ul>
         <ul class="side-menu top">
             <li>
@@ -169,11 +164,11 @@ foreach ($image_filenames as $filename) {
                         <p><strong>Bidding End Date/Time: </strong> <?php echo  date('m/d/y h:i A', strtotime($product_data['bidding_end_date'])); ?></p>
                         <div class="action">
                             <?php
-                            $stmt = $user->runQuery("SELECT * FROM favorite WHERE user_id=:user_id AND product_id=:product_id");
-                            $stmt->execute(array(":user_id" => $_SESSION['userSession'], ":product_id" => $product_id));
+                            $stmt = $user->runQuery("SELECT * FROM favorite WHERE user_id=:user_id AND product_id=:product_id AND status = :status");
+                            $stmt->execute(array(":user_id" => $_SESSION['userSession'], ":product_id" => $product_id, ":status" => "active"));
 
                             if ($stmt->rowCount() >= 1) { ?>
-
+                                <button type="button" class="btn btn-warning"><a href="controller/product-controller?id=<?php echo $product_data['id'] ?>&remove_favorite_product=1" class="remove_favorite"><i class='bx bxs-message-alt-x' ></i> Unfavorite</a></button>
                             <?php } else { ?>
                                 <button type="button" class="btn btn-success"><a href="controller/product-controller?id=<?php echo $product_data['id'] ?>&favorite_product=1" class="favorite"><i class='bx bxs-heart-circle'></i> Save</a></button>
                             <?php } ?>
