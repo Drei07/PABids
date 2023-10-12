@@ -2,18 +2,18 @@
 class Database
 {
     // // Localhost
-    // private $host = "localhost";
-    // private $db_name = "pabids";
-    // private $username = "root";
-    // private $password = "";
-    // public $conn;
+    private $host = "localhost";
+    private $db_name = "pabids";
+    private $username = "root";
+    private $password = "";
+    public $conn;
 
     // Live
-    private $host = "localhost";
-    private $db_name = "u297724503_pabids";
-    private $username = "u297724503_pabids";
-    private $password = "Pabids_2023$";
-    public $conn;
+    // private $host = "localhost";
+    // private $db_name = "u297724503_pabids";
+    // private $username = "u297724503_pabids";
+    // private $password = "Pabids_2023$";
+    // public $conn;
 
      
     public function dbConnection()
