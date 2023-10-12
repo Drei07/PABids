@@ -34,7 +34,7 @@ class Products
     
         // Get seller's details
         $seller_user_data = $this->getSellerData($user_id);
-        $seller_name = $seller_data['first_name'] . ' ' . $seller_user_data['last_name'];
+        $seller_name = $seller_data['first_name'] . ' ' . $seller_data['last_name'];
         $seller_address = $this->getFormattedSellerAddress($seller_user_data);
         $seller_contact_number = $seller_data['phone_number'];
         $product_url = "http://localhost/PABids/dashboard/user/";
