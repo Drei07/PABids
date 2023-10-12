@@ -536,8 +536,13 @@ class Products
     {
         // Query to get the highest bid price for the product
         $stmt = $this->user->runQuery("SELECT MAX(bid_price) as max_bid_price FROM bidding WHERE product_id=:product_id AND status=:status");
-        $stmt->bindParam(':product_id', $product_id);
-        $stmt->bindParam(':status', "active");
+// Define the parameters as variables
+$product_id = $product_id;
+$status = "active"; // Assuming status is a string
+
+// Use these variables in the bindParam method
+$stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT); // Assuming product_id is an integer
+$stmt->bindParam(':status', $status, PDO::PARAM_STR);
         $stmt->execute();
         $max_bid_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
