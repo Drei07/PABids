@@ -167,18 +167,26 @@ class Products
         $stmt->bindParam(':product_image', $image_filenames_str);
         $stmt->bindParam(':product_number', $product_number);
     
-        if ($stmt->execute()) {
-            $_SESSION['status_title'] = 'Success!';
-            $_SESSION['status'] = 'Succesfully';
-            $_SESSION['status_code'] = 'Product succesfully added!';
-            $_SESSION['status_code'] = 'success';
-            $_SESSION['status_timer'] = 40000;
-        } else {
-            $_SESSION['status_title'] = 'Oops!';
-            $_SESSION['status'] = 'Something went wrong, please try again!';
+        try {
+            if ($stmt->execute()) {
+                $_SESSION['status_title'] = 'Success!';
+                $_SESSION['status'] = 'Product successfully added!';
+                $_SESSION['status_code'] = 'success';
+                $_SESSION['status_timer'] = 40000;
+            } else {
+                $_SESSION['status_title'] = 'Oops!';
+                $_SESSION['status'] = 'Something went wrong, please try again!';
+                $_SESSION['status_code'] = 'error';
+                $_SESSION['status_timer'] = 100000;
+            }
+        } catch (PDOException $e) {
+            error_log('Database error: ' . $e->getMessage());
+            $_SESSION['status_title'] = 'Database Error';
+            $_SESSION['status'] = 'An error occurred while adding the product. Please try again later.';
             $_SESSION['status_code'] = 'error';
             $_SESSION['status_timer'] = 100000;
         }
+        
         header('Location: ../product');
     }
     
