@@ -156,7 +156,7 @@ if (isset($_POST['btn-accept-seller'])) {
 
 if (isset($_POST['btn-decline-seller'])) {
     $seller_id = $_GET["id"];
-    $status = "not_verify";
+    $status = "disabled";
 
     $decline_seller = new Seller();
     $decline_seller->declineSeller($seller_id, $status);
