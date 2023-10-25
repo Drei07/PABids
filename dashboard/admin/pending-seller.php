@@ -8,7 +8,7 @@ include_once 'header.php';
     <?php
     include_once '../../configuration/header.php';
     ?>
-    <title>PABids | Pending Seller</title>
+    <title>PintaDukit | Pending Seller</title>
 </head>
 
 <body>

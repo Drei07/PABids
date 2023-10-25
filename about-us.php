@@ -16,7 +16,7 @@ $config = new SystemConfig();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="src/css/landing-page.css?v=<?php echo time(); ?>">
-    <title>PABids | About Us</title>
+    <title>PintaDukit | About Us</title>
 
 </head>
 
@@ -39,8 +39,8 @@ $config = new SystemConfig();
     <section class="home" id="homes" style="margin-bottom: 20rem;margin-top: 5rem; min-height: 90vh;
 ">
         <div class="content">
-            <h3>About<span> PABids </span></h3>
-            <p>PABids is a cutting-edge online platform dedicated to transforming the world of auctions and bidding. Our mission is to offer a user-friendly and secure bidding experience for both sellers and buyers. Join PABids today and become a part of the next-generation bidding revolution. Whether you're a seller looking to showcase your products or a savvy bidder searching for exciting deals, we've got you covered. Let's embark on an exciting journey of auctions and bidding together!</p>
+            <h3>About<span> PintaDukit </span></h3>
+            <p>PintaDukit is a cutting-edge online platform dedicated to transforming the world of auctions and bidding. Our mission is to offer a user-friendly and secure bidding experience for both sellers and buyers. Join PintaDukit today and become a part of the next-generation bidding revolution. Whether you're a seller looking to showcase your products or a savvy bidder searching for exciting deals, we've got you covered. Let's embark on an exciting journey of auctions and bidding together!</p>
         </div>&nbsp;&nbsp;
 
         <div class="image">
@@ -53,7 +53,7 @@ $config = new SystemConfig();
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <a href="" id="logo"><img src="src/img/pabids-logo.png" alt="PABids" style="width: 100px;"></a>
+                        <a href="" id="logo"><img src="src/img/pabids-logo.png" alt="PintaDukit" style="width: 100px;"></a>
                         <a href="" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="src/img/caret-right-fill.svg" alt="close-btn" width="24" height="24"></a>
                     </div>
                     <div class="modal-body">
@@ -105,7 +105,7 @@ $config = new SystemConfig();
                             </div>
                         </form>
                         <div class="terms">
-                            <p>By registering, you will agree to the following <a href="" data-bs-toggle="modal" data-bs-target="#terms">Terms & Conditions</a> of PABids.</p>
+                            <p>By registering, you will agree to the following <a href="" data-bs-toggle="modal" data-bs-target="#terms">Terms & Conditions</a> of PintaDukit.</p>
                         </div>
                     </div>
                 </div>
@@ -118,7 +118,7 @@ $config = new SystemConfig();
 
         <div class="pre-registration">
             <h3>REGISTERED NOW!<br>
-                <p>Elevate Your Art Experience with PABids</p>
+                <p>Elevate Your Art Experience with PintaDukit</p>
             </h3>
             <a href="#" data-bs-toggle="modal" data-bs-target="#pre-registration" class="btn">Register</a>
 

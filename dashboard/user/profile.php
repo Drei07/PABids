@@ -18,7 +18,7 @@ include_once 'header.php';
 	<section id="sidebar">
 		<a href="" class="brand">
 			<img src="../../src/img/<?php echo $config->getSystemFavicon() ?>" alt="logo">
-			<span class="text">PABids<br>
+			<span class="text">PintaDukit<br>
 				<p>PAMPANGA ARTISTIC BIDS</p>
 			</span>
 		</a>

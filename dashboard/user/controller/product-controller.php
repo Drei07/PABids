@@ -439,7 +439,7 @@ class Products
 
             if ($stmt->execute()) {
                 $_SESSION['status_title'] = 'Success!';
-                $_SESSION['status'] = 'You have successfully placed your bid! We will notify you via email if you win the bid. Thank you for using PABids.';
+                $_SESSION['status'] = 'You have successfully placed your bid! We will notify you via email if you win the bid. Thank you for using PintaDukit.';
                 $_SESSION['status_code'] = 'success';
                 $_SESSION['status_timer'] = 40000;
             } else {
@@ -685,7 +685,7 @@ class Products
             $this->closeBidProduct($product_id, 'closed');
 
             $_SESSION['status_title'] = "Success!";
-            $_SESSION['status'] = "An email will sent to the winner of this bidding! Thank you for using PABids.";
+            $_SESSION['status'] = "An email will sent to the winner of this bidding! Thank you for using PintaDukit.";
             $_SESSION['status_code'] = "success";
             $_SESSION['status_timer'] = 40000;
             header('Location: ../product');

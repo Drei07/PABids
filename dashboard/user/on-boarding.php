@@ -8,7 +8,7 @@ include_once 'header.php';
 	<?php
 	include_once '../../configuration/header.php';
 	?>
-	<title>PABids Selling Center</title>
+	<title>PintaDukit Selling Center</title>
 
 </head>
 
@@ -21,7 +21,7 @@ include_once 'header.php';
 	<section id="sidebar">
 		<a href="" class="brand">
 			<img src="../../src/img/<?php echo $config->getSystemFavicon() ?>" alt="logo">
-			<span class="text">PABids<br>
+			<span class="text">PintaDukit<br>
 				<p>PAMPANGA ARTISTIC BIDS</p>
 			</span>
 		</a>
@@ -107,7 +107,7 @@ include_once 'header.php';
 					?>
 						<div class="welcome">
 							<img src="../../src/img/Sales-consulting.svg" alt="">
-							<h1>Welcome to PABids!</h1>
+							<h1>Welcome to PintaDukit!</h1>
 							<p>To get started, register as a seller by providing the necessary information.</p>
 							<button type="button" data-bs-toggle="modal" data-bs-target="#classModal" class="registration btn-dark"></i> Start Registration</button>
 						</div>

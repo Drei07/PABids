@@ -106,7 +106,7 @@ class Registration {
                         Temporary Password:<br />$hash_password
                         <p>To complete your account registration, please click the button below to verify your email address:</p>
                         <p><a class='button' href='$this->main_url/verify-account?id=$id&code=$tokencode'>Verify Email</a></p>
-                        <p>If you did not sign up for an account for PABids, you can safely ignore this email.</p>
+                        <p>If you did not sign up for an account for PintaDukit, you can safely ignore this email.</p>
                         <p>Thank you!</p>
                     </div>
                 </body>
@@ -172,7 +172,7 @@ Class SellerRegistration{
     
             if ($exec) {
                 $_SESSION['status_title'] = 'Success!';
-                $_SESSION['status'] = 'Successfully registered. Please wait for an email to confirm your registration. Thank you for using PABids';
+                $_SESSION['status'] = 'Successfully registered. Please wait for an email to confirm your registration. Thank you for using PintaDukit';
                 $_SESSION['status_code'] = 'success';
                 $_SESSION['status_timer'] = 40000;
             } else {

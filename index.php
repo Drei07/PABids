@@ -14,7 +14,7 @@ $config = new SystemConfig();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="src/css/landing-page.css?v=<?php echo time(); ?>">
-    <title>PABids</title>
+    <title>PintaDukit</title>
 
 </head>
 
@@ -37,7 +37,7 @@ $config = new SystemConfig();
     <!-- Live queue Modal -->
     <section class="home" id="homes">
         <div class="content">
-            <h3>WELCOME TO PABids<span> Your Gateway to Pampanga's Art Scene</span></h3>
+            <h3>WELCOME TO PintaDukit<span> Your Gateway to Pampanga's Art Scene</span></h3>
             <p>Our transparent and secure bidding system empowers you to engage with art in a dynamic way. With every bid, you're not just participating; you're shaping the destiny of exceptional artworks. Join our community of passionate bidders and become a part of the art legacy.</p>
             <a href="" class="btn" data-bs-toggle="modal" data-bs-target="#pre-registration">Register Now!</a>
         </div>&nbsp;&nbsp;
@@ -48,7 +48,7 @@ $config = new SystemConfig();
     </section>
     <section class="covid" id="cov">
 
-        <h1 class="heading" data-aos-once="false"> Join the <span>PABids</span> Community Today, Your Trusted Art Auction Partner </h1>
+        <h1 class="heading" data-aos-once="false"> Join the <span>PintaDukit</span> Community Today, Your Trusted Art Auction Partner </h1>
 
         <div class="column" id="column1">
 
@@ -61,7 +61,7 @@ $config = new SystemConfig();
                     <object data="src/img/icons8-otp-64.png"></object>
                     <h3>Register for an Account</h3>
                 </div>
-                <p data-aos="fade-in">On the PABids website's homepage, you should see "Register." Click on this option to complete the registration form by providing your valid email address.</p>
+                <p data-aos="fade-in">On the PintaDukit website's homepage, you should see "Register." Click on this option to complete the registration form by providing your valid email address.</p>
             </div>
 
         </div>
@@ -76,7 +76,7 @@ $config = new SystemConfig();
                     <object data="src/img/icons8-access-50.png"></object>
                     <h3>Explore the Auctions</h3>
                 </div>
-                <p data-aos="fade-in">Once you've registered and set up your profile, you can start exploring the art auctions available on PABids. Browse through the listings to find artwork that interests you.</p>
+                <p data-aos="fade-in">Once you've registered and set up your profile, you can start exploring the art auctions available on PintaDukit. Browse through the listings to find artwork that interests you.</p>
             </div>
 
         </div>
@@ -107,7 +107,7 @@ $config = new SystemConfig();
                     <object data="src/img/icons8-ticket-64.png"></object>
                     <h3>Participate in Auctions</h3>
                 </div>
-                <p data-aos="fade-in">Attend auctions or participate in online bidding, depending on the format offered by PABids. You may need to follow specific bidding rules and guidelines provided for each auction.</p>
+                <p data-aos="fade-in">Attend auctions or participate in online bidding, depending on the format offered by PintaDukit. You may need to follow specific bidding rules and guidelines provided for each auction.</p>
             </div>
 
         </div>
@@ -151,7 +151,7 @@ $config = new SystemConfig();
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <a href="" id="logo"><img src="src/img/pabids-logo.png" alt="PABids" style="width: 100px;"></a>
+                        <a href="" id="logo"><img src="src/img/pabids-logo.png" alt="PintaDukit" style="width: 100px;"></a>
                         <a href="" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="src/img/caret-right-fill.svg" alt="close-btn" width="24" height="24"></a>
                     </div>
                     <div class="modal-body">
@@ -203,7 +203,7 @@ $config = new SystemConfig();
                             </div>
                         </form>
                         <div class="terms">
-                            <p>By registering, you will agree to the following <a href="" data-bs-toggle="modal" data-bs-target="#terms">Terms & Conditions</a> of PABids.</p>
+                            <p>By registering, you will agree to the following <a href="" data-bs-toggle="modal" data-bs-target="#terms">Terms & Conditions</a> of PintaDukit.</p>
                         </div>
                     </div>
                 </div>

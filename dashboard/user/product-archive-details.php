@@ -45,7 +45,7 @@ foreach ($image_filenames as $filename) {
     <?php
     include_once '../../configuration/header.php';
     ?>
-    <title>PABids | Product Details</title>
+    <title>PintaDukit | Product Details</title>
 </head>
 
 <body>
@@ -57,7 +57,7 @@ foreach ($image_filenames as $filename) {
     <section id="sidebar">
         <a href="" class="brand">
             <img src="../../src/img/<?php echo $config->getSystemFavicon() ?>" alt="logo">
-            <span class="text">PABids<br>
+            <span class="text">PintaDukit<br>
                 <p>PAMPANGA ARTISTIC BIDS</p>
             </span>
         </a>

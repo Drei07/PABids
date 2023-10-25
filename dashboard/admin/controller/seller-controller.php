@@ -118,7 +118,7 @@ class Seller
             </div>
             <h1>Congratulations! You're the Winning Bidder</h1>
             <p>Hello <strong>$email</strong>,</p>
-            <p>We are here to inform you that your registration as a seller is declined. Thank you for using PABids:</p><br>
+            <p>We are here to inform you that your registration as a seller is declined. Thank you for using PintaDukit:</p><br>
         </div>
     </body>
     </html>";

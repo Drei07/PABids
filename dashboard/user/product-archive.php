@@ -8,7 +8,7 @@ include_once 'header.php';
 	<?php
 	include_once '../../configuration/header.php';
 	?>
-	<title>PABids | Product Archive</title>
+	<title>PintaDukit | Product Archive</title>
 </head>
 
 <body>
@@ -20,7 +20,7 @@ include_once 'header.php';
 	<section id="sidebar">
 		<a href="" class="brand">
 			<img src="../../src/img/<?php echo $config->getSystemFavicon() ?>" alt="logo">
-			<span class="text">PABids<br>
+			<span class="text">PintaDukit<br>
 				<p>PAMPANGA ARTISTIC BIDS</p>
 			</span>
 		</a>
